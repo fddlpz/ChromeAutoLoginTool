@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "可配置自动登录助手",
+  "version": "1.0.0",
+  "description": "针对指定页面按配置自动填充登录表单并提交。",
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_title": "自动登录助手",
+    "default_popup": "popup/popup.html"
+  },
+  "options_page": "options/options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "shared/config.js",
+        "content/content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

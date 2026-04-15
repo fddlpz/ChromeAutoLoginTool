@@ -1,0 +1,115 @@
+:root {
+  --card: rgba(255, 252, 246, 0.94);
+  --line: rgba(120, 98, 74, 0.18);
+  --ink: #1f2a37;
+  --muted: #6b7280;
+  --accent: #b65f3a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 340px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 191, 143, 0.35), transparent 35%),
+    linear-gradient(180deg, #f8f1e8, #efe7dc);
+  color: var(--ink);
+  font-family: "Segoe UI", "PingFang SC", sans-serif;
+}
+
+.popup {
+  padding: 14px;
+}
+
+.card {
+  border-radius: 20px;
+  padding: 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 40px rgba(104, 71, 44, 0.14);
+}
+
+.top,
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 11px;
+  color: var(--accent);
+}
+
+h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.status-block {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--line);
+}
+
+.label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.value,
+.hint {
+  font-size: 13px;
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+.muted,
+.hint {
+  color: var(--muted);
+}
+
+.hint {
+  margin: 14px 0 0;
+}
+
+.actions {
+  margin-top: 16px;
+}
+
+button {
+  flex: 1;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font: inherit;
+  cursor: pointer;
+}
+
+button.primary {
+  color: white;
+  background: var(--accent);
+}
+
+button.secondary {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid var(--line);
+}

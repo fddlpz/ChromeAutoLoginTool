@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自动登录助手</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="popup">
+      <section class="card">
+        <div class="top">
+          <div>
+            <p class="eyebrow">Auto Login</p>
+            <h1>自动登录助手</h1>
+          </div>
+          <label class="switch">
+            <input id="globalEnabled" type="checkbox" checked>
+            <span>启用</span>
+          </label>
+        </div>
+
+        <div class="status-block">
+          <div class="label">当前页面</div>
+          <div id="currentUrl" class="value muted">读取中...</div>
+        </div>
+
+        <div class="status-block">
+          <div class="label">命中规则</div>
+          <div id="matchedRule" class="value">检查中...</div>
+        </div>
+
+        <div id="statusHint" class="hint">进入目标页面时会自动运行。</div>
+
+        <div class="actions">
+          <button id="rerunButton" class="primary" type="button">立即执行一次</button>
+          <button id="openOptionsButton" class="secondary" type="button">打开配置页</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="../shared/config.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
