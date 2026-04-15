@@ -74,3 +74,20 @@ https://oa.example.com/sso/*
 - 规则分组、优先级和启停控制
 - 从企业配置中心拉取规则
 - 登录前增加人工确认或验证码流程
+
+## 本地测试用例
+
+项目内已经提供一套可直接运行的本地联调用例，相关文件在 `tests/` 目录下：
+
+- `tests/login-demo.html`
+- `tests/local-config.json`
+- `tests/server.js`
+- `tests/README.md`
+
+快速验证步骤：
+
+1. 运行 `node tests/server.js`
+2. 在扩展配置页导入 `tests/local-config.json`
+3. 打开 `http://127.0.0.1:8787/login-demo.html`
+4. 观察页面是否自动填充租户、账号、密码并自动提交
+5. 刷新页面，或在成功页点击“同 Tab 退出并回到登录页”，确认都会再次触发自动登录

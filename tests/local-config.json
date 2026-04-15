@@ -1,0 +1,31 @@
+{
+  "enabled": true,
+  "rules": [
+    {
+      "id": "local_demo_rule",
+      "name": "本地测试页自动登录",
+      "enabled": true,
+      "urlPatterns": [
+        "http://127.0.0.1:8787/login-demo.html*",
+        "http://localhost:8787/login-demo.html*"
+      ],
+      "usernameSelector": "#username",
+      "usernameValue": "demo.user",
+      "passwordSelector": "#password",
+      "passwordValue": "P@ssw0rd!",
+      "submitSelector": "#loginButton",
+      "formSelector": "#loginForm",
+      "alreadyLoggedInSelector": ".user-avatar",
+      "autoSubmit": true,
+      "waitTimeoutMs": 8000,
+      "submitDelayMs": 200,
+      "extraFields": [
+        {
+          "selector": "#tenantCode",
+          "value": "acme"
+        }
+      ],
+      "notes": "用于本地联调自动填充和自动提交流程。"
+    }
+  ]
+}

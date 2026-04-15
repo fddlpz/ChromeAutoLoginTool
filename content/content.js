@@ -5,7 +5,12 @@
     return;
   }
 
-  const SESSION_PREFIX = "__auto_login_done__:";
+  const executionState = {
+    lastUrl: location.href,
+    appliedRuleIds: new Set()
+  };
+  let lastObservedUrl = location.href;
+  let scheduledRunTimerId = null;
 
   function log(ruleName, message, extra) {
     const prefix = `[AutoLogin][${ruleName || "unknown"}]`;
@@ -17,32 +22,33 @@
     console.info(prefix, message);
   }
 
-  function buildSessionKey(rule) {
-    return `${SESSION_PREFIX}${rule.id}:${location.href}`;
+  function syncExecutionState() {
+    if (executionState.lastUrl === location.href) {
+      return;
+    }
+
+    executionState.lastUrl = location.href;
+    executionState.appliedRuleIds.clear();
   }
 
   function wasApplied(rule) {
-    try {
-      return sessionStorage.getItem(buildSessionKey(rule)) === "1";
-    } catch (error) {
-      return false;
-    }
+    syncExecutionState();
+    return executionState.appliedRuleIds.has(rule.id);
   }
 
   function markApplied(rule) {
-    try {
-      sessionStorage.setItem(buildSessionKey(rule), "1");
-    } catch (error) {
-      log(rule.name, "无法写入 sessionStorage，忽略去重标记。");
-    }
+    syncExecutionState();
+    executionState.appliedRuleIds.add(rule.id);
   }
 
   function clearApplied(rule) {
-    try {
-      sessionStorage.removeItem(buildSessionKey(rule));
-    } catch (error) {
-      log(rule.name, "无法清理 sessionStorage 标记。");
-    }
+    syncExecutionState();
+    executionState.appliedRuleIds.delete(rule.id);
+  }
+
+  function resetAppliedState() {
+    executionState.lastUrl = location.href;
+    executionState.appliedRuleIds.clear();
   }
 
   function sleep(ms) {
@@ -263,6 +269,57 @@
     }
   }
 
+  function scheduleAutoRun(reason) {
+    if (scheduledRunTimerId) {
+      clearTimeout(scheduledRunTimerId);
+    }
+
+    scheduledRunTimerId = setTimeout(() => {
+      scheduledRunTimerId = null;
+      log("system", `检测到${reason}，重新评估自动登录。`);
+      runForCurrentPage(false).catch((error) => {
+        console.warn("[AutoLogin] 重新评估自动登录失败：", error);
+      });
+    }, 0);
+  }
+
+  function handleUrlChange() {
+    if (lastObservedUrl === location.href) {
+      return;
+    }
+
+    lastObservedUrl = location.href;
+    resetAppliedState();
+    scheduleAutoRun("同 tab 页面切换");
+  }
+
+  function installNavigationWatchers() {
+    window.addEventListener("hashchange", handleUrlChange);
+    window.addEventListener("popstate", handleUrlChange);
+    window.addEventListener("pageshow", (event) => {
+      if (!event.persisted) {
+        return;
+      }
+
+      lastObservedUrl = location.href;
+      resetAppliedState();
+      scheduleAutoRun("页面恢复");
+    });
+
+    ["pushState", "replaceState"].forEach((methodName) => {
+      const original = history[methodName];
+      if (typeof original !== "function") {
+        return;
+      }
+
+      history[methodName] = function () {
+        const result = original.apply(this, arguments);
+        queueMicrotask(handleUrlChange);
+        return result;
+      };
+    });
+  }
+
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (!message || message.type !== "auto-login:rerun") {
       return undefined;
@@ -281,6 +338,7 @@
     return true;
   });
 
+  installNavigationWatchers();
   runForCurrentPage(false).catch((error) => {
     console.warn("[AutoLogin] 初始化失败：", error);
   });
