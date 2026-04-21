@@ -453,6 +453,15 @@
       };
     }
 
+    // 如果配置已加密但值未被解密，跳过执行防止填入 [object Object]
+    if (state.crypto && (typeof rule.usernameValue === "object" || typeof rule.passwordValue === "object")) {
+      console.warn("[AutoLogin] 配置已加密但未正确解锁，跳过自动登录。");
+      return {
+        ok: true,
+        status: "locked"
+      };
+    }
+
     if (force) {
       clearApplied(rule);
     }

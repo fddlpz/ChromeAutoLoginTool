@@ -136,24 +136,24 @@
         error.code = DECRYPT_ERROR_CODE;
         error.cause = e;
         throw error;
-        console.warn("[AutoLogin] 解密状态失败，可能主口令不正确:", e);
       }
     }
     return normalized;
   }
 
   async function saveState(state) {
-    let normalized = normalizeState(state);
+    const plaintextState = normalizeState(state);
+    let storageState = plaintextState;
     const key = await getCryptoKey();
     if (key && hasCrypto()) {
       try {
-        normalized = await global.AutoLoginCrypto.encryptState(normalized, key);
+        storageState = await global.AutoLoginCrypto.encryptState(plaintextState, key);
       } catch (e) {
         console.warn("[AutoLogin] 加密状态失败:", e);
       }
     }
-    await chrome.storage.local.set({ [STORAGE_KEY]: normalized });
-    return normalized;
+    await chrome.storage.local.set({ [STORAGE_KEY]: storageState });
+    return plaintextState;
   }
 
   async function setEnabled(enabled) {
