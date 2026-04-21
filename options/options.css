@@ -132,6 +132,25 @@ label {
   font-size: 14px;
 }
 
+.hint-text {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.hint-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 11px;
+  background: rgba(182, 95, 58, 0.1);
+  color: var(--accent);
+  border: 1px solid rgba(182, 95, 58, 0.2);
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
 input[type="text"],
 input[type="password"],
 input[type="number"],
@@ -265,6 +284,64 @@ button.ghost {
   background: rgba(31, 42, 55, 0.92);
   color: white;
   box-shadow: var(--shadow);
+}
+
+.crypto-panel {
+  margin-bottom: 24px;
+}
+
+.crypto-card {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  border-radius: 24px;
+  padding: 24px;
+  max-width: 720px;
+}
+
+.crypto-header {
+  margin-bottom: 16px;
+}
+
+.crypto-header h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.crypto-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.crypto-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.crypto-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.crypto-status {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.crypto-status.ok {
+  background: rgba(83, 154, 112, 0.14);
+  color: #2f6e4a;
+}
+
+.crypto-status.warn {
+  background: rgba(180, 143, 58, 0.14);
+  color: #7a5d1a;
 }
 
 @media (max-width: 1024px) {

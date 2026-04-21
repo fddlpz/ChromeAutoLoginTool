@@ -27,6 +27,61 @@
         </div>
       </section>
 
+      <section id="cryptoPanel" class="crypto-panel" style="display:none;">
+        <div class="crypto-card">
+          <div class="crypto-header">
+            <h3>主口令</h3>
+            <p class="crypto-hint">启用主口令后，所有账号密码将以 AES-GCM 加密存储在本地。</p>
+          </div>
+          <div id="cryptoSetup" class="crypto-body">
+            <div class="grid two-cols">
+              <label>
+                <span>设置主口令</span>
+                <input id="masterPassword" type="password" placeholder="首次设置主口令" autocomplete="new-password">
+              </label>
+              <label>
+                <span>确认主口令</span>
+                <input id="masterPasswordConfirm" type="password" placeholder="再次输入确认" autocomplete="new-password">
+              </label>
+            </div>
+            <button id="setupCryptoButton" class="primary" type="button">启用加密</button>
+          </div>
+          <div id="cryptoUnlock" class="crypto-body" style="display:none;">
+            <label>
+              <span>输入主口令以解锁</span>
+              <input id="unlockPassword" type="password" placeholder="主口令" autocomplete="current-password">
+            </label>
+            <div class="crypto-actions">
+              <button id="unlockButton" class="primary" type="button">解锁</button>
+              <button id="disableCryptoButton" class="ghost" type="button">关闭加密</button>
+            </div>
+          </div>
+          <div id="cryptoActive" class="crypto-body" style="display:none;">
+            <div class="crypto-status ok">已启用加密</div>
+            <div class="crypto-actions">
+              <button id="relockButton" class="secondary" type="button">立即锁定</button>
+              <button id="changePasswordButton" class="ghost" type="button">更换主口令</button>
+            </div>
+          </div>
+          <div id="cryptoChange" class="crypto-body" style="display:none;">
+            <div class="grid two-cols">
+              <label>
+                <span>当前主口令</span>
+                <input id="currentPassword" type="password" placeholder="当前主口令">
+              </label>
+              <label>
+                <span>新主口令</span>
+                <input id="newPassword" type="password" placeholder="新主口令">
+              </label>
+            </div>
+            <div class="crypto-actions">
+              <button id="confirmChangePasswordButton" class="primary" type="button">确认更换</button>
+              <button id="cancelChangePasswordButton" class="ghost" type="button">取消</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="layout">
         <section class="panel form-panel">
           <div class="section-head">
@@ -60,6 +115,10 @@
                 <input id="usernameValue" type="text" placeholder="your.account" required>
               </label>
             </div>
+            <label>
+              <span>账号定位提示 <small class="hint-text">（当选择器不唯一时，通过 placeholder / aria-label 等属性辅助定位）</small></span>
+              <input id="usernameHint" type="text" placeholder="例如：手机号 / 账号 / 邮箱">
+            </label>
 
             <div class="grid two-cols">
               <label>
@@ -71,6 +130,10 @@
                 <input id="passwordValue" type="password" placeholder="your.password" required>
               </label>
             </div>
+            <label>
+              <span>密码定位提示 <small class="hint-text">（当选择器不唯一时，通过 placeholder / aria-label 等属性辅助定位）</small></span>
+              <input id="passwordHint" type="text" placeholder="例如：密码 / 验证码 / 通行码">
+            </label>
 
             <div class="grid two-cols">
               <label>
@@ -142,6 +205,7 @@
       </section>
     </main>
 
+    <script src="../shared/crypto.js"></script>
     <script src="../shared/config.js"></script>
     <script src="options.js"></script>
   </body>

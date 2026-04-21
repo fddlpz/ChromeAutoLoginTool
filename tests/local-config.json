@@ -26,6 +26,26 @@
         }
       ],
       "notes": "用于本地联调自动填充和自动提交流程。"
+    },
+    {
+      "id": "smart_locator_demo_rule",
+      "name": "智能定位测试页",
+      "enabled": true,
+      "urlPatterns": [
+        "http://127.0.0.1:8787/smart-locator-demo.html*",
+        "http://localhost:8787/smart-locator-demo.html*"
+      ],
+      "usernameSelector": ".form-input",
+      "usernameHint": "手机号",
+      "usernameValue": "demo.user",
+      "passwordSelector": ".form-input",
+      "passwordHint": "密码",
+      "passwordValue": "P@ssw0rd!",
+      "submitSelector": "button",
+      "autoSubmit": true,
+      "waitTimeoutMs": 8000,
+      "submitDelayMs": 200,
+      "notes": "测试选择器不唯一时，通过 hint 语义属性进行智能定位。"
     }
   ]
 }
